@@ -1,5 +1,5 @@
 <template>
-  <div class="home mt-5">
+  <div class="home py-4">
     <div>
       <h2>Controle de gastos</h2>
       <b-row class="mt-5 above-715">
@@ -97,38 +97,44 @@
       <h3 v-if="hasItems" class="py-4">
         Resultados: <span :class="belowZero">{{ result }}</span>
       </h3>
-      <div v-for="uau in test" :key="uau">
-        <b-row>
-          <b-col class="d-flex borders">
-            <h5>
-              Entrada:
-              <span class="text-success font-weight-bold">{{ uau.item }}</span>
-            </h5>
-          </b-col>
-          <b-col class="d-flex borders">
-            <h5>
-              Valor:
-              <span class="text-success font-weight-bold">{{ uau.value }}</span>
-            </h5>
-          </b-col>
-        </b-row>
-      </div>
-      <div v-for="uau in test2" :key="uau" class="under-mt">
-        <b-row>
-          <b-col class="d-flex borders">
-            <h5>
-              Saída:
-              <span class="text-danger font-weight-bold">{{ uau.item }}</span>
-            </h5>
-          </b-col>
-          <b-col class="d-flex borders">
-            <h5>
-              Valor:
-              <span class="text-danger font-weight-bold">{{ uau.value }}</span>
-            </h5>
-          </b-col>
-        </b-row>
-      </div>
+      <b-row>
+        <b-col class="items-flex">
+          <div v-for="uau in test" :key="uau">
+            <div class="item-value-card my-3 mx-3">
+              <h5>
+                <span class="font-weight-bold">{{ uau.item }}</span>
+              </h5>
+              <b-icon
+                icon="currency-dollar"
+                variant="success"
+                style="height: 60px; width: 40px"
+              ></b-icon>
+              <h5>
+                <span class="font-weight-bold">+ R$ {{ uau.value }},00</span>
+              </h5>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col class="items-flex">
+          <div v-for="uau in test2" :key="uau">
+            <div class="item-value-card my-3 mx-3">
+              <h5>
+                <span class="font-weight-bold">{{ uau.item }}</span>
+              </h5>
+              <b-icon
+                icon="currency-dollar"
+                variant="danger"
+                style="height: 60px; width: 40px"
+              ></b-icon>
+              <h5>
+                <span class="font-weight-bold">- R$ {{ uau.value }},00</span>
+              </h5>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
     </div>
   </div>
 </template>
@@ -232,10 +238,25 @@ export default {
   margin: 0 auto;
 }
 
-.borders {
+/* .borders {
   border: 1px solid gray;
   align-items: center;
   padding: 0.5em;
+} */
+
+.item-value-card {
+  width: 225px !important;
+  padding: 0.8em;
+  background: #d1f0ff;
+  border-radius: 15px;
+}
+
+.items-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .money-input {
@@ -255,11 +276,11 @@ export default {
     margin-top: 0.4em;
   }
 
-  h5{
+  h5 {
     font-size: 0.8rem;
   }
 
-  .home{
+  .home {
     max-width: 70%;
   }
 }
