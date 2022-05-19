@@ -50,10 +50,10 @@
         <b-row class="mt-3">
           <b-col>
             <b-form-input
-              name="Entrada"
+              name="Saída"
               v-model="outcomes.item"
-              placeholder="Entrada"
-              label="Entrada"
+              placeholder="Saída"
+              label="Saída"
             ></b-form-input>
           </b-col>
         </b-row>
