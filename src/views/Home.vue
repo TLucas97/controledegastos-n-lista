@@ -277,7 +277,7 @@ export default {
   }
 
   h5 {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   .home {
