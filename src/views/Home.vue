@@ -245,7 +245,6 @@ export default {
 } */
 
 .item-value-card {
-  width: 225px !important;
   padding: 0.8em;
   background: #d1f0ff;
   border-radius: 15px;
