@@ -19,7 +19,7 @@
           ></money>
         </b-col>
         <b-col cols="3">
-          <b-button variant="success" @click="addEntrie">Adicionar</b-button>
+          <b-button variant="success" @click="addIncome">Adicionar</b-button>
         </b-col>
       </b-row>
       <div class="under-715 mt-3">
@@ -44,7 +44,7 @@
         </b-row>
         <b-row>
           <b-col>
-            <b-button variant="success" @click="addEntrie">Adicionar</b-button>
+            <b-button variant="success" @click="addIncome">Adicionar</b-button>
           </b-col>
         </b-row>
         <b-row class="mt-3">
@@ -95,11 +95,12 @@
     </div>
     <div>
       <h3 v-if="hasItems" class="py-4">
-        Resultados: <span :class="belowZero">{{ result }}</span>
+        Resultados:
+        <span :class="belowZero">R$ {{ result }}</span>
       </h3>
       <b-row>
         <b-col class="items-flex">
-          <div v-for="uau in test" :key="uau">
+          <div v-for="(uau, index) in incomesArr" :key="index">
             <div class="item-value-card my-3 mx-3">
               <h5>
                 <span class="font-weight-bold">{{ uau.item }}</span>
@@ -110,15 +111,22 @@
                 style="height: 60px; width: 40px"
               ></b-icon>
               <h5>
-                <span class="font-weight-bold">+ R$ {{ uau.value }},00</span>
+                <span class="font-weight-bold">+R$ {{ uau.value }}</span>
               </h5>
+              <b-icon
+                @click="removeElement_income(index)"
+                icon="trash-fill"
+                variant="danger"
+                class="mt-2"
+                style="width: 60px; height: 30px; cursor: pointer"
+              ></b-icon>
             </div>
           </div>
         </b-col>
       </b-row>
       <b-row>
         <b-col class="items-flex">
-          <div v-for="uau in test2" :key="uau">
+          <div v-for="(uau, index) in outcomesArr" :key="index">
             <div class="item-value-card my-3 mx-3">
               <h5>
                 <span class="font-weight-bold">{{ uau.item }}</span>
@@ -129,8 +137,15 @@
                 style="height: 60px; width: 40px"
               ></b-icon>
               <h5>
-                <span class="font-weight-bold">- R$ {{ uau.value }},00</span>
+                <span class="font-weight-bold">-R$ {{ uau.value }}</span>
               </h5>
+              <b-icon
+                @click="removeElement_outcome(index)"
+                icon="trash-fill"
+                variant="danger"
+                class="mt-2"
+                style="width: 60px; height: 30px; cursor: pointer"
+              ></b-icon>
             </div>
           </div>
         </b-col>
@@ -153,8 +168,8 @@ export default {
       editedIndex: -1,
       hasItems: false,
       result: null,
-      test: [],
-      test2: [],
+      incomesArr: [],
+      outcomesArr: [],
       entries: {
         item: "",
         value: null,
@@ -177,25 +192,31 @@ export default {
     };
   },
   methods: {
-    addEntrie() {
+    addIncome() {
       if (this.entries.value !== null && this.entries.item !== "") {
         const entriesCreation = Object.assign({}, this.entries);
-        this.test.push(entriesCreation);
-        const numbers = this.test;
-        const numbersMap = numbers.map((item) => parseInt(item.value));
-        const result = numbersMap.reduce((partialSum, a) => partialSum + a);
-        this.values.value1 = result;
-        const sum = this.values.value1 - this.values.value2;
-        this.result = parseFloat(sum).toLocaleString("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        });
-        if (sum < 0) {
+        this.incomesArr.push(entriesCreation);
+
+        let entries = this.incomesArr;
+        let outcomes = this.outcomesArr;
+        let incomesMap = entries.map((item) => parseInt(item.value));
+        let outcomesMap = outcomes.map((item) => parseInt(item.value));
+
+        if (incomesMap.length > 0 && outcomes.length === 0) {
+          let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
+          this.result = sum;
+        } else if (incomesMap.length > 0 && outcomes.length > 0) {
+          let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
+          let outcomesSum = outcomesMap.reduce(
+            (partialSum, a) => partialSum + a
+          );
+          this.result = incomesSum - outcomesSum;
+        }
+        if (this.result < 0) {
           this.belowZero = "text-danger";
         } else {
           this.belowZero = "text-success";
         }
-        console.log(result);
         this.entries.value = "";
         this.entries.item = "";
         this.hasItems = true;
@@ -204,29 +225,93 @@ export default {
     addOutcome() {
       if (this.outcomes.value !== null && this.outcomes.item !== "") {
         const outcomesCreation = Object.assign({}, this.outcomes);
-        this.test2.push(outcomesCreation);
-        const numbers = this.test2;
-        const numbersMap = numbers.map((item) => parseInt(item.value));
-        const result = numbersMap.reduce((partialSum, a) => partialSum + a);
-        this.values.value2 = result;
-        const sum = this.values.value1 - this.values.value2;
-        this.result = parseFloat(sum).toLocaleString("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        });
-        if (sum < 0) {
+        this.outcomesArr.push(outcomesCreation);
+
+        let entries = this.incomesArr;
+        let outcomes = this.outcomesArr;
+        let incomesMap = entries.map((item) => parseInt(item.value));
+        let outcomesMap = outcomes.map((item) => parseInt(item.value));
+
+        if (outcomesMap.length > 0 && incomesMap.length === 0) {
+          let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
+          this.result = sum;
+        } else if (incomesMap.length > 0 && outcomes.length > 0) {
+          let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
+          let outcomesSum = outcomesMap.reduce(
+            (partialSum, a) => partialSum + a
+          );
+          this.result = incomesSum - outcomesSum;
+        }
+        if (this.result < 0) {
           this.belowZero = "text-danger";
         } else {
           this.belowZero = "text-success";
         }
-        console.log(result);
         this.outcomes.value = "";
         this.outcomes.item = "";
         this.hasItems = true;
       }
     },
-    deleteTable() {
-      this.test.splice(this.editedIndex, 1);
+    removeElement_income(index) {
+      this.incomesArr.splice(index, 1);
+
+      let entries = this.incomesArr;
+      let outcomes = this.outcomesArr;
+      let incomesMap = entries.map((item) => parseInt(item.value));
+      let outcomesMap = outcomes.map((item) => parseInt(item.value));
+
+      if (incomesMap.length > 0 && outcomesMap.length === 0) {
+        let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
+        this.result = sum;
+      } else if (incomesMap.length === 0 && outcomesMap.length > 0){
+        let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
+        this.result = incomesMap - sum;
+      } else if (incomesMap.length > 0 && outcomesMap.length > 0) {
+        let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
+        let outcomesSum = outcomesMap.reduce((partialSum, a) => partialSum + a);
+        this.result = incomesSum - outcomesSum;
+      } else if (incomesMap.length === 0 && outcomesMap.length === 0) {
+        this.result = 0;
+        this.hasItems = false;
+      }
+      if (this.result < 0) {
+        this.belowZero = "text-danger";
+      } else {
+        this.belowZero = "text-success";
+      }
+      this.entries.value = "";
+      this.entries.item = "";
+    },
+
+    removeElement_outcome(index) {
+      this.outcomesArr.splice(index, 1);
+
+      let entries = this.incomesArr;
+      let outcomes = this.outcomesArr;
+      let incomesMap = entries.map((item) => parseInt(item.value));
+      let outcomesMap = outcomes.map((item) => parseInt(item.value));
+
+      if (outcomes.length > 0 && incomesMap.length === 0) {
+        let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
+        this.result = incomesMap - sum;
+      } else if (outcomes.length === 0 && incomesMap.length > 0){
+        let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
+        this.result = sum;
+      } else if (incomesMap.length > 0 && outcomesMap.length > 0) {
+        let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
+        let outcomesSum = outcomesMap.reduce((partialSum, a) => partialSum + a);
+        this.result = incomesSum - outcomesSum;
+      } else if (incomesMap.length === 0 && outcomesMap.length === 0) {
+        this.result = 0;
+        this.hasItems = false;
+      }
+      if (this.result < 0) {
+        this.belowZero = "text-danger";
+      } else {
+        this.belowZero = "text-success";
+      }
+      this.entries.value = "";
+      this.entries.item = "";
     },
   },
 };
