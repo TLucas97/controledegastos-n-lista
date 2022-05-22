@@ -220,6 +220,35 @@ export default {
         this.entries.value = "";
         this.entries.item = "";
         this.hasItems = true;
+        this.$toast.success("Entrada adicionada com sucesso", {
+          position: "top-right",
+          timeout: 2391,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.39,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
+      } else {
+        this.$toast.warning("Preencha todos os dados", {
+          position: "top-right",
+          timeout: 2391,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.39,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
       }
     },
     addOutcome() {
@@ -250,6 +279,35 @@ export default {
         this.outcomes.value = "";
         this.outcomes.item = "";
         this.hasItems = true;
+        this.$toast.success("Saída adicionada com sucesso", {
+          position: "top-right",
+          timeout: 2391,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.39,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
+      } else {
+        this.$toast.warning("Preencha todos os dados", {
+          position: "top-right",
+          timeout: 2391,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.39,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
       }
     },
     removeElement_income(index) {
@@ -263,7 +321,7 @@ export default {
       if (incomesMap.length > 0 && outcomesMap.length === 0) {
         let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
         this.result = sum;
-      } else if (incomesMap.length === 0 && outcomesMap.length > 0){
+      } else if (incomesMap.length === 0 && outcomesMap.length > 0) {
         let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
         this.result = incomesMap - sum;
       } else if (incomesMap.length > 0 && outcomesMap.length > 0) {
@@ -294,7 +352,7 @@ export default {
       if (outcomes.length > 0 && incomesMap.length === 0) {
         let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
         this.result = incomesMap - sum;
-      } else if (outcomes.length === 0 && incomesMap.length > 0){
+      } else if (outcomes.length === 0 && incomesMap.length > 0) {
         let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
         this.result = sum;
       } else if (incomesMap.length > 0 && outcomesMap.length > 0) {
