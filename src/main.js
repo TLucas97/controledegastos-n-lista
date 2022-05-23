@@ -8,6 +8,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import money from "v-money";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import Transitions from 'vue2-transitions'
 
 Vue.use(Toast, {
   transition: "Vue-Toastification__fade",
@@ -25,6 +26,7 @@ Vue.use(Toast, {
 Vue.use(money, { precision: 4 });
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(Transitions)
 
 Vue.config.productionTip = false;
 

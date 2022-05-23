@@ -99,55 +99,59 @@
         <span :class="belowZero">R$ {{ result }}</span>
       </h3>
       <b-row>
-        <b-col class="items-flex">
-          <div v-for="(uau, index) in incomesArr" :key="index">
-            <div class="item-value-card my-3 mx-3">
-              <h5>
-                <span class="font-weight-bold">{{ uau.item }}</span>
-              </h5>
-              <b-icon
-                icon="currency-dollar"
-                variant="success"
-                style="height: 60px; width: 40px"
-              ></b-icon>
-              <h5>
-                <span class="font-weight-bold">+R$ {{ uau.value }}</span>
-              </h5>
-              <b-icon
-                @click="removeElement_income(index)"
-                icon="trash-fill"
-                variant="danger"
-                class="mt-2"
-                style="width: 60px; height: 30px; cursor: pointer"
-              ></b-icon>
+        <b-col>
+          <zoom-center-transition group :duration="400" class="items-flex">
+            <div v-for="(incomes, index) in incomesArr" :key="index">
+              <div class="item-value-card my-3 mx-3" v-show="animation">
+                <h5>
+                  <span class="font-weight-bold">{{ incomes.item }}</span>
+                </h5>
+                <b-icon
+                  icon="currency-dollar"
+                  variant="success"
+                  style="height: 60px; width: 40px"
+                ></b-icon>
+                <h5>
+                  <span class="font-weight-bold">+R$ {{ incomes.value }}</span>
+                </h5>
+                <b-icon
+                  @click="removeElement_income(index)"
+                  icon="trash-fill"
+                  variant="danger"
+                  class="mt-2"
+                  style="width: 60px; height: 30px; cursor: pointer"
+                ></b-icon>
+              </div>
             </div>
-          </div>
+          </zoom-center-transition>
         </b-col>
       </b-row>
       <b-row>
         <b-col class="items-flex">
-          <div v-for="(uau, index) in outcomesArr" :key="index">
-            <div class="item-value-card my-3 mx-3">
-              <h5>
-                <span class="font-weight-bold">{{ uau.item }}</span>
-              </h5>
-              <b-icon
-                icon="currency-dollar"
-                variant="danger"
-                style="height: 60px; width: 40px"
-              ></b-icon>
-              <h5>
-                <span class="font-weight-bold">-R$ {{ uau.value }}</span>
-              </h5>
-              <b-icon
-                @click="removeElement_outcome(index)"
-                icon="trash-fill"
-                variant="danger"
-                class="mt-2"
-                style="width: 60px; height: 30px; cursor: pointer"
-              ></b-icon>
+          <zoom-center-transition group :duration="400" class="items-flex">
+            <div v-for="(outcomes, index) in outcomesArr" :key="index">
+              <div class="item-value-card my-3 mx-3" v-show="animation">
+                <h5>
+                  <span class="font-weight-bold">{{ outcomes.item }}</span>
+                </h5>
+                <b-icon
+                  icon="currency-dollar"
+                  variant="danger"
+                  style="height: 60px; width: 40px"
+                ></b-icon>
+                <h5>
+                  <span class="font-weight-bold">-R$ {{ outcomes.value }}</span>
+                </h5>
+                <b-icon
+                  @click="removeElement_outcome(index)"
+                  icon="trash-fill"
+                  variant="danger"
+                  class="mt-2"
+                  style="width: 60px; height: 30px; cursor: pointer"
+                ></b-icon>
+              </div>
             </div>
-          </div>
+          </zoom-center-transition>
         </b-col>
       </b-row>
     </div>
@@ -156,17 +160,20 @@
 
 <script>
 import { Money } from "v-money";
+import { ZoomCenterTransition } from "vue2-transitions";
 
 export default {
   name: "Home",
   components: {
     Money,
+    ZoomCenterTransition,
   },
   data() {
     return {
       belowZero: "text-success",
       editedIndex: -1,
       hasItems: false,
+      animation: false,
       result: null,
       incomesArr: [],
       outcomesArr: [],
@@ -196,6 +203,7 @@ export default {
       if (this.entries.value !== null && this.entries.item !== "") {
         const entriesCreation = Object.assign({}, this.entries);
         this.incomesArr.push(entriesCreation);
+        this.animation = true;
 
         let entries = this.incomesArr;
         let outcomes = this.outcomesArr;
@@ -235,7 +243,7 @@ export default {
           rtl: false,
         });
       } else {
-        this.$toast.warning("Preencha todos os dados", {
+        this.$toast.warning("Preencha todos os dados para adicionar entrada", {
           position: "top-right",
           timeout: 2391,
           closeOnClick: true,
@@ -263,7 +271,7 @@ export default {
 
         if (outcomesMap.length > 0 && incomesMap.length === 0) {
           let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
-          this.result = sum;
+          this.result = incomesMap - sum;
         } else if (incomesMap.length > 0 && outcomes.length > 0) {
           let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
           let outcomesSum = outcomesMap.reduce(
@@ -294,7 +302,7 @@ export default {
           rtl: false,
         });
       } else {
-        this.$toast.warning("Preencha todos os dados", {
+        this.$toast.warning("Preencha todos os dados para adicionar saída", {
           position: "top-right",
           timeout: 2391,
           closeOnClick: true,
@@ -337,8 +345,20 @@ export default {
       } else {
         this.belowZero = "text-success";
       }
-      this.entries.value = "";
-      this.entries.item = "";
+      this.$toast.success("Entrada removida com sucesso", {
+        position: "top-right",
+        timeout: 2391,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.39,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: false,
+        icon: true,
+        rtl: false,
+      });
     },
 
     removeElement_outcome(index) {
@@ -368,8 +388,20 @@ export default {
       } else {
         this.belowZero = "text-success";
       }
-      this.entries.value = "";
-      this.entries.item = "";
+      this.$toast.success("Saída removida com sucesso", {
+        position: "top-right",
+        timeout: 2391,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.39,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: false,
+        icon: true,
+        rtl: false,
+      });
     },
   },
 };
