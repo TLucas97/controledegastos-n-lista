@@ -2,12 +2,13 @@
   <div class="home py-4">
     <div>
       <h2>Controle de gastos</h2>
+      <small>Administre seus gastos mensais!</small>
       <b-row class="mt-5 above-715">
         <b-col>
           <b-form-input
             name="Entrada"
             v-model="entries.item"
-            placeholder="Entrada"
+            placeholder="Ex: Salário"
             label="Entrada"
           ></b-form-input>
         </b-col>
@@ -28,7 +29,7 @@
             <b-form-input
               name="Entrada"
               v-model="entries.item"
-              placeholder="Entrada"
+              placeholder="Ex: Salário"
               label="Entrada"
             ></b-form-input>
           </b-col>
@@ -52,7 +53,7 @@
             <b-form-input
               name="Saída"
               v-model="outcomes.item"
-              placeholder="Saída"
+              placeholder="Ex: Aluguel"
               label="Saída"
             ></b-form-input>
           </b-col>
@@ -77,7 +78,7 @@
           <b-form-input
             name="Saída"
             v-model="outcomes.item"
-            placeholder="Saída"
+            placeholder="Ex: Aluguel"
             label="Saída"
           ></b-form-input>
         </b-col>
@@ -95,7 +96,7 @@
     </div>
     <div>
       <h3 v-if="hasItems" class="py-4">
-        Resultados:
+        Renda atual:
         <span :class="belowZero">R$ {{ result }}</span>
       </h3>
       <b-row>
@@ -243,7 +244,7 @@ export default {
           rtl: false,
         });
       } else {
-        this.$toast.warning("Preencha todos os dados para adicionar entrada", {
+        this.$toast.warning("Preencha todos os dados para adicionar", {
           position: "top-right",
           timeout: 2391,
           closeOnClick: true,
@@ -302,7 +303,7 @@ export default {
           rtl: false,
         });
       } else {
-        this.$toast.warning("Preencha todos os dados para adicionar saída", {
+        this.$toast.warning("Preencha todos os dados para adicionar", {
           position: "top-right",
           timeout: 2391,
           closeOnClick: true,
@@ -411,6 +412,10 @@ export default {
 .home {
   max-width: 45%;
   margin: 0 auto;
+}
+
+small {
+  color: rgba(128, 128, 128, 0.76);
 }
 
 /* .borders {
