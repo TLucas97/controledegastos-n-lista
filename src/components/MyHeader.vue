@@ -1,6 +1,6 @@
 <template>
   <div class="header d-flex justify-content-center py-2">
-    <router-link to="/">
+    <router-link to="/control">
       <p class="px-2 text-white font-weight-bold">Gastos</p>
     </router-link>
     <router-link to="/listadecompras">
