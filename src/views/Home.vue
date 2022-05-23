@@ -39,10 +39,10 @@
 
 .home-card {
   width: 300px;
-  background: rgba(103, 103, 194, 0.76);
+  background: rgba(103, 103, 194, 0.479);
   padding: 1.3em;
   border-radius: 15px;
-  color: white;
+  color: black !important;
 }
 
 .icon-size {
