@@ -3,7 +3,7 @@
     <router-link to="/control">
       <p class="px-2 text-white font-weight-bold">Gastos</p>
     </router-link>
-    <router-link to="/listadecompras">
+    <router-link to="/list">
       <p class="px-2 text-white font-weight-bold">Compras</p>
     </router-link>
   </div>

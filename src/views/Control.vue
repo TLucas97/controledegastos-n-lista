@@ -1,5 +1,5 @@
 <template>
-  <div class="home py-4">
+  <div class="control py-4">
     <div>
       <h2>Controle de gastos</h2>
       <small>Administre seus gastos mensais!</small>
@@ -164,7 +164,7 @@ import { Money } from "v-money";
 import { ZoomCenterTransition } from "vue2-transitions";
 
 export default {
-  name: "Home",
+  name: "control",
   components: {
     Money,
     ZoomCenterTransition,
@@ -409,15 +409,6 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  max-width: 45%;
-  margin: 0 auto;
-}
-
-small {
-  color: rgba(128, 128, 128, 0.76);
-}
-
 /* .borders {
   border: 1px solid gray;
   align-items: center;
@@ -460,7 +451,7 @@ small {
     font-size: 1rem;
   }
 
-  .home {
+  .control {
     max-width: 70%;
   }
 }

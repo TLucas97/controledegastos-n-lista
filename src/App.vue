@@ -25,6 +25,15 @@ export default {
   font-family: "Roboto", sans-serif;
 }
 
+.control {
+  max-width: 45%;
+  margin: 0 auto;
+}
+
+small {
+  color: rgba(128, 128, 128, 0.76);
+}
+
 a {
   text-decoration: none !important;
 }
