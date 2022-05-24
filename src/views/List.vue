@@ -166,7 +166,7 @@ export default {
 <style scoped>
 .line-table {
   padding-bottom: 0.1em;
-  border-bottom: 1px solid black;
+  border: 1px solid black;
 }
 
 .money-input {

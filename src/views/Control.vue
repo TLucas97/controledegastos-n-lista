@@ -208,8 +208,8 @@ export default {
 
         let entries = this.incomesArr;
         let outcomes = this.outcomesArr;
-        let incomesMap = entries.map((item) => parseInt(item.value));
-        let outcomesMap = outcomes.map((item) => parseInt(item.value));
+        let incomesMap = entries.map((item) => item.value);
+        let outcomesMap = outcomes.map((item) => item.value);
 
         if (incomesMap.length > 0 && outcomes.length === 0) {
           let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
@@ -267,8 +267,8 @@ export default {
 
         let entries = this.incomesArr;
         let outcomes = this.outcomesArr;
-        let incomesMap = entries.map((item) => parseInt(item.value));
-        let outcomesMap = outcomes.map((item) => parseInt(item.value));
+        let incomesMap = entries.map((item) => item.value);
+        let outcomesMap = outcomes.map((item) => item.value);
 
         if (outcomesMap.length > 0 && incomesMap.length === 0) {
           let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
@@ -324,8 +324,8 @@ export default {
 
       let entries = this.incomesArr;
       let outcomes = this.outcomesArr;
-      let incomesMap = entries.map((item) => parseInt(item.value));
-      let outcomesMap = outcomes.map((item) => parseInt(item.value));
+      let incomesMap = entries.map((item) => item.value);
+      let outcomesMap = outcomes.map((item) => item.value);
 
       if (incomesMap.length > 0 && outcomesMap.length === 0) {
         let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
@@ -367,8 +367,8 @@ export default {
 
       let entries = this.incomesArr;
       let outcomes = this.outcomesArr;
-      let incomesMap = entries.map((item) => parseInt(item.value));
-      let outcomesMap = outcomes.map((item) => parseInt(item.value));
+      let incomesMap = entries.map((item) => item.value);
+      let outcomesMap = outcomes.map((item) => item.value);
 
       if (outcomes.length > 0 && incomesMap.length === 0) {
         let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
