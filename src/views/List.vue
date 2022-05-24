@@ -30,7 +30,7 @@
         </b-button>
       </div>
       <h5 v-if="resultView" class="pt-3">
-        Total em compras: <span class="price-result">R$ {{ result }}</span>
+        Total em compras: <span class="price-result">{{ result }}</span>
       </h5>
       <b-row
         class="pt-5 line-table"
@@ -76,7 +76,7 @@ export default {
         value: null,
       },
       money: {
-        decimal: ",",
+        decimal: ".",
         thousands: ".",
         prefix: "R$ ",
         precision: 2,
@@ -94,10 +94,13 @@ export default {
       ) {
         const copies = Object.assign({}, this.newItems);
         this.items.push(copies);
-        let itemsMap = this.items.map((item) => parseInt(item.value));
+        let itemsMap = this.items.map((item) => item.value);
         let sum = itemsMap.reduce((partialSum, a) => partialSum + a);
-        console.log(sum)
-        this.result = sum;
+        console.log(sum);
+        this.result = parseFloat(sum).toLocaleString("pt-br", {
+          style: "currency",
+          currency: "BRL",
+        });
         this.resultView = true;
         this.newItems.item = "";
         this.newItems.value = undefined;
