@@ -213,13 +213,14 @@ export default {
 
         if (incomesMap.length > 0 && outcomes.length === 0) {
           let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
-          this.result = sum;
+          this.result = sum.toFixed(2);
         } else if (incomesMap.length > 0 && outcomes.length > 0) {
           let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
           let outcomesSum = outcomesMap.reduce(
             (partialSum, a) => partialSum + a
           );
-          this.result = incomesSum - outcomesSum;
+          const minus = incomesSum - outcomesSum;
+          this.result = minus.toFixed(2);
         }
         if (this.result < 0) {
           this.belowZero = "text-danger";
@@ -272,13 +273,15 @@ export default {
 
         if (outcomesMap.length > 0 && incomesMap.length === 0) {
           let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
-          this.result = incomesMap - sum;
+          const minus = incomesMap - sum;
+          this.result = minus.toFixed(2);
         } else if (incomesMap.length > 0 && outcomes.length > 0) {
           let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
           let outcomesSum = outcomesMap.reduce(
             (partialSum, a) => partialSum + a
           );
-          this.result = incomesSum - outcomesSum;
+          const minus = incomesSum - outcomesSum;
+          this.result = minus.toFixed(2);
         }
         if (this.result < 0) {
           this.belowZero = "text-danger";
@@ -329,14 +332,16 @@ export default {
 
       if (incomesMap.length > 0 && outcomesMap.length === 0) {
         let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
-        this.result = sum;
+        this.result = sum.toFixed(2);
       } else if (incomesMap.length === 0 && outcomesMap.length > 0) {
         let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
-        this.result = incomesMap - sum;
+        const minus = incomesMap - sum;
+        this.result = minus.toFixed(2);
       } else if (incomesMap.length > 0 && outcomesMap.length > 0) {
         let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
         let outcomesSum = outcomesMap.reduce((partialSum, a) => partialSum + a);
-        this.result = incomesSum - outcomesSum;
+        const minus = incomesSum - outcomesSum;
+        this.result = minus.toFixed(2);
       } else if (incomesMap.length === 0 && outcomesMap.length === 0) {
         this.result = 0;
         this.hasItems = false;
@@ -372,14 +377,16 @@ export default {
 
       if (outcomes.length > 0 && incomesMap.length === 0) {
         let sum = outcomesMap.reduce((partialSum, a) => partialSum + a);
-        this.result = incomesMap - sum;
+        const minus = incomesMap - sum;
+        this.result = minus.toFixed(2);
       } else if (outcomes.length === 0 && incomesMap.length > 0) {
         let sum = incomesMap.reduce((partialSum, a) => partialSum + a);
-        this.result = sum;
+        this.result = sum.toFixed(2);
       } else if (incomesMap.length > 0 && outcomesMap.length > 0) {
         let incomesSum = incomesMap.reduce((partialSum, a) => partialSum + a);
         let outcomesSum = outcomesMap.reduce((partialSum, a) => partialSum + a);
-        this.result = incomesSum - outcomesSum;
+        const minus = incomesSum - outcomesSum;
+        this.result = minus.toFixed(2);
       } else if (incomesMap.length === 0 && outcomesMap.length === 0) {
         this.result = 0;
         this.hasItems = false;

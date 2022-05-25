@@ -1,7 +1,7 @@
 <template>
   <div class="control py-4">
     <div>
-      <h2>Lista de compras</h2>
+      <h4>Lista de compras</h4>
       <small>Administre suas compras no mercado!</small>
       <div class="pt-4">
         <b-row>
@@ -30,14 +30,14 @@
         </b-button>
       </div>
       <h5 v-if="resultView" class="pt-3">
-        Total em compras: <span class="price-result">{{ result }}</span>
+        Total em compras: <span class="price-result">R$ {{ result }}</span>
       </h5>
       <b-row
         class="pt-5 line-table"
         v-for="(item, index) in items"
         :key="index"
       >
-        <b-col cols="7" class="text-start">
+        <b-col cols="8" class="text-start">
           <p>
             {{ item.item }}
             <span class="price-result">(R$ {{ item.value }})</span>
@@ -49,6 +49,23 @@
             @click="removeShoppingItem(index)"
             icon="trash"
           ></b-icon>
+        </b-col>
+        <b-col class="text-end">
+          <b-icon style="cursor: pointer" @click="openEdit" icon="pen"></b-icon>
+          <b-modal v-model="modalShow" hide-footer hide-header>
+            <h4 class="mb-2">Edite o item</h4>
+            <b-form-input
+              v-model="editedItem"
+              name="Item"
+              placeholder="Ex: Café"
+            ></b-form-input>
+            <money
+              class="money-input my-2"
+              v-model="editedValue"
+              v-bind="money"
+            ></money>
+            <b-button @click="editItem(index)">Salvar</b-button>
+          </b-modal>
         </b-col>
       </b-row>
     </div>
@@ -64,7 +81,10 @@ export default {
   },
   data() {
     return {
+      modalShow: false,
       counter: 0,
+      editedItem: null,
+      editedValue: null,
       result: null,
       resultView: false,
       counterView: false,
@@ -97,10 +117,7 @@ export default {
         let itemsMap = this.items.map((item) => item.value);
         let sum = itemsMap.reduce((partialSum, a) => partialSum + a);
         console.log(sum);
-        this.result = parseFloat(sum).toLocaleString("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        });
+        this.result = sum.toFixed(2);
         this.resultView = true;
         this.newItems.item = "";
         this.newItems.value = undefined;
@@ -137,14 +154,48 @@ export default {
     },
     removeShoppingItem(index) {
       this.items.splice(index, 1);
-      let itemsMap = this.items.map((item) => parseInt(item.value));
+      let itemsMap = this.items.map((item) => item.value);
       if (itemsMap.length > 0) {
         let sum = itemsMap.reduce((partialSum, a) => partialSum + a);
-        this.result = sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        this.result = sum.toFixed(2);
       } else {
         this.resultView = false;
       }
       this.$toast.success("Item removido", {
+        position: "top-right",
+        timeout: 2391,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.39,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: false,
+        icon: true,
+        rtl: false,
+      });
+    },
+    openEdit() {
+      this.editedItem = "";
+      this.editedValue = "";
+      this.modalShow = true;
+    },
+    editItem(index) {
+      const copies = Object.assign({}, this.newItems);
+      this.items.splice(index, 1);
+      copies.item = this.editedItem;
+      copies.value = this.editedValue;
+      this.items.push(copies);
+      let itemsMap = this.items.map((item) => parseInt(item.value));
+      if (itemsMap.length > 0) {
+        let sum = itemsMap.reduce((partialSum, a) => partialSum + a);
+        this.result = sum.toFixed(2);
+      } else {
+        this.resultView = false;
+      }
+      this.modalShow = false;
+      this.$toast.success("Item editado com sucesso", {
         position: "top-right",
         timeout: 2391,
         closeOnClick: true,
@@ -166,7 +217,7 @@ export default {
 <style scoped>
 .line-table {
   padding-bottom: 0.1em;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .money-input {
@@ -188,7 +239,10 @@ export default {
 
 @media (max-width: 715px) {
   .control {
-    max-width: 70%;
+    max-width: 85%;
+  }
+  h5 {
+    font-size: 0.89rem;
   }
 }
 </style>
