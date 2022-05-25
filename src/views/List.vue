@@ -187,7 +187,7 @@ export default {
       copies.item = this.editedItem;
       copies.value = this.editedValue;
       this.items.push(copies);
-      let itemsMap = this.items.map((item) => parseInt(item.value));
+      let itemsMap = this.items.map((item) => item.value);
       if (itemsMap.length > 0) {
         let sum = itemsMap.reduce((partialSum, a) => partialSum + a);
         this.result = sum.toFixed(2);
