@@ -177,38 +177,55 @@ export default {
       });
     },
     openEdit() {
-      this.editedItem = "";
-      this.editedValue = "";
+      this.editedItem = null;
+      this.editedValue = null;
       this.modalShow = true;
     },
     editItem(index) {
-      const copies = Object.assign({}, this.newItems);
-      this.items.splice(index, 1);
-      copies.item = this.editedItem;
-      copies.value = this.editedValue;
-      this.items.push(copies);
-      let itemsMap = this.items.map((item) => item.value);
-      if (itemsMap.length > 0) {
-        let sum = itemsMap.reduce((partialSum, a) => partialSum + a);
-        this.result = sum.toFixed(2);
+      if (this.editItem !== null && this.editedValue !== null) {
+        const copies = Object.assign({}, this.newItems);
+        this.items.splice(index, 1);
+        copies.item = this.editedItem;
+        copies.value = this.editedValue;
+        this.items.push(copies);
+        let itemsMap = this.items.map((item) => item.value);
+        if (itemsMap.length > 0) {
+          let sum = itemsMap.reduce((partialSum, a) => partialSum + a);
+          this.result = sum.toFixed(2);
+        } else {
+          this.resultView = false;
+        }
+        this.modalShow = false;
+        this.$toast.success("Item editado com sucesso", {
+          position: "top-right",
+          timeout: 2391,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.39,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
       } else {
-        this.resultView = false;
+        this.$toast.warning("Preencha todos os dados para salvar", {
+          position: "top-right",
+          timeout: 2391,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.39,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
       }
-      this.modalShow = false;
-      this.$toast.success("Item editado com sucesso", {
-        position: "top-right",
-        timeout: 2391,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.39,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: false,
-        icon: true,
-        rtl: false,
-      });
     },
   },
 };
