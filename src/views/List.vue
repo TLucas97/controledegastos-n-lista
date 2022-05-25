@@ -182,7 +182,7 @@ export default {
       this.modalShow = true;
     },
     editItem(index) {
-      if (this.editItem !== null && this.editedValue !== null) {
+      if (this.editedItem !== null && this.editedValue !== null) {
         const copies = Object.assign({}, this.newItems);
         this.items.splice(index, 1);
         copies.item = this.editedItem;
