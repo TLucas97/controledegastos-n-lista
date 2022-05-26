@@ -53,7 +53,7 @@
         <b-col class="text-end">
           <b-icon
             style="cursor: pointer"
-            @click="showModal = true"
+            @click="modalShow = true"
             icon="pen"
           ></b-icon>
           <b-modal v-model="modalShow" hide-footer hide-header>
