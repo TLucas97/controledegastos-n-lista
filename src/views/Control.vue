@@ -201,7 +201,11 @@ export default {
   },
   methods: {
     addIncome() {
-      if (this.entries.value !== null && this.entries.item !== "") {
+      if (
+        this.entries.value !== null &&
+        this.entries.value !== 0 &&
+        this.entries.item !== ""
+      ) {
         const entriesCreation = Object.assign({}, this.entries);
         this.incomesArr.push(entriesCreation);
         this.animation = true;

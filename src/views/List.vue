@@ -51,7 +51,11 @@
           ></b-icon>
         </b-col>
         <b-col class="text-end">
-          <b-icon style="cursor: pointer" @click="openEdit" icon="pen"></b-icon>
+          <b-icon
+            style="cursor: pointer"
+            @click="showModal = true"
+            icon="pen"
+          ></b-icon>
           <b-modal v-model="modalShow" hide-footer hide-header>
             <h4 class="mb-2">Edite o item</h4>
             <b-form-input
@@ -176,13 +180,12 @@ export default {
         rtl: false,
       });
     },
-    openEdit() {
-      this.editedItem = null;
-      this.editedValue = null;
-      this.modalShow = true;
-    },
     editItem(index) {
-      if (this.editedItem !== null && this.editedValue !== null) {
+      if (
+        this.editedItem !== null &&
+        this.editedValue !== null &&
+        this.editedValue !== 0
+      ) {
         const copies = Object.assign({}, this.newItems);
         this.items.splice(index, 1);
         copies.item = this.editedItem;
